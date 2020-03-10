@@ -1,6 +1,6 @@
 
 # 从仓库拉取 自己build的 带有 python 3.7 的 Alpine Linux 环境的镜像
-FROM registry.cn-beijing.aliyuncs.com/hwnet/django:2.2.8
+FROM hwnet/django-blog:1.11.26
 
 # 维护者信息
 LABEL "author"="HONGWEI"
