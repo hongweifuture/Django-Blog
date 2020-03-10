@@ -1,0 +1,115 @@
+{% extends 'blog/base.html' %}
+
+{% load blog_tags %}
+
+{% block content_detail %}
+
+<!--article header, show current url page, index or category or tag-->
+<!--article_index from views IndexView-->
+<header class="blog-post-page-title">
+    {% for article in article_index %}
+        {% if forloop.first %}
+            {% url 'blog:category' article.category.slug as category_url %}
+            {% for tag in article.tags.all %}
+                {% url 'blog:tag' tag.slug as tag_url %}
+                {% if request.get_full_path == tag_url %}
+                    <h3>文章标签：{{ tag.name }}</h3>
+                {% elif request.get_full_path == category_url %}
+                    {% if forloop.first %}
+                        <h3>文章分类：{{ article.category }}</h3>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {% if request.get_full_path == '/' %}
+                {% if index_marquee %}
+                    <marquee><font color="#ff4500" size="3">{{ index_marquee }}</marquee>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+</header>
+
+<!--article body, include img summary create_date update_date category-->
+<div class="blog-main-post">
+    <div class="index-post-br"></div>
+        {% for article in article_index %}
+                <article class="blog-post-block">
+                {% if article.img_link %}
+                    <header>
+                        <div class="blog-post-block-img">
+                            <img src="{{ article.img_link.url }}">
+                        </div>
+                    </header>
+                {% endif %}
+
+                {% if article.is_top %}
+                    <img class="float-right" src="{% static 'blog/images/top.png' %}">
+                {% endif %}
+                <div class="blog-post-block-padding">
+                    {# <a href="{% url 'blog:article' article.slug   %}" >{{ article.title }}</a> #}
+                    <a href="{{ article.get_absolute_url }}" >{{ article.title }}</a>
+                    <section>
+                        {{ article.summary }}
+                    </section>
+                    <footer>
+                         <span>
+                             <i class="fa fa-folder-o"></i>
+                                {# <a href="{% url 'blog:category' article.category %}" itemprop="url" rel="index">{{ article.category }}</a> #}
+                             <a href="{{ article.category.get_absolute_url }}" itemprop="url" rel="index">{{ article.category }}</a>
+                         </span>
+
+                         <span>
+                            <time datetime="{{ article.create_date }}"><i class="fa fa-clock-o"></i> 创建于{{ article.create_date }}</time>
+                            {% if article.update_date > article.create_date %}
+                            <time datetime="{{ article.update_date }}"><i class="fa fa-clock-o"></i> 更新于{{ article.update_date }}</time>
+                            {% endif %}
+                         </span>
+
+                        <span>
+                            <i class="fa fa-eye">   {{ article.views }}</i>
+                        </span>
+
+                    </footer>
+                </div>
+            </article>
+        {% endfor %}
+
+        <!--article paginated, set paginated paginate on views-->
+        <!--is_paginated first last left right left_has_more right_has_more from views IndexView-->
+        {% if is_paginated %}
+        <nav id="pagination" class="blog-pagination" >
+            {% if first %}
+                <span class="page-number current" href="?page=1">1</span>
+            {% endif %}
+            {% if left %}
+                {% if left_has_more %}
+                    <span class="space">...</span>
+                {% endif %}
+                {% for i in left %}
+                <a class="extend next" rel="next" href="?page={{ i }}">{{ i }}</a>
+                {% endfor %}
+            {% endif %}
+            <a class="page-number " href="?page={{ page_obj.number }}">{{ page_obj.number }}</a>
+            {% if right %}
+                {% for i in right %}
+                <a class="extend next" rel="next" href="?page={{ i }}">{{ i }}</a>
+                {% endfor %}
+                {% if right_has_more %}
+                <span class="space">...</span>
+                {% endif %}
+            {% endif %}
+            {% if last %}
+                <a class='page-number' href="?page={{ paginator.num_pages }}">{{ paginator.num_pages }}</a>
+            {% endif %}
+        </nav>
+        {% endif %}
+</div>
+{% endblock %}
+
+
+{% block sidebar_toc %}
+    {% include 'blog/sidebar.html' %}
+{% endblock %}
+

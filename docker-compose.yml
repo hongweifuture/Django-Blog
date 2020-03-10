@@ -1,0 +1,51 @@
+
+version: "3"
+services:
+
+  website:
+    build: .
+    container_name: hw_django
+    restart: always
+    expose:
+      - "8000"
+    volumes:
+      - ./django:/opt/hw-blog
+    command: bash -c "python manage.py collectstatic --noinput && python manage.py makemigrations && python manage.py migrate && python manage.py rebuild_index --noinput && gunicorn --timeout=30 --workers=4 --bind :8000 website.wsgi:application"
+    depends_on:
+      - mysql
+    networks:
+      - django_network
+
+  mysql:
+    image: mysql:5.7
+    container_name: hw_mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    command: mysqld --explicit_defaults_for_timestamp=true --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-connect='SET NAMES utf8mb4;'
+    environment:
+      - MYSQL_ROOT_PASSWORD=zhwei.cn
+      - MYSQL_DATABASE=website
+    networks:
+      - django_network
+      
+  nginx:
+    image: nginx:latest
+    container_name: hw_nginx
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./django/static:/opt/hw-blog/static
+      - ./django/media:/opt/hw-blog/media
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - website
+    networks:
+      - django_network
+      
+networks:
+  django_network:
+    driver: bridge

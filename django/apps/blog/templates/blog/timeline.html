@@ -1,0 +1,43 @@
+{% extends 'blog/base.html' %}
+
+{% load blog_tags %}
+
+{% block content_detail %}
+
+<header class="blog-post-page-title"></header>
+
+<div class="container">
+    <div class="page-header mt-0">
+        <h4></h4>
+    </div>
+    <ul class="timeline">
+        {% for timeline in timeline_list %}
+        {% if timeline.side == 'L' %}
+        <li>
+            {% else %}
+        <li class="timeline-inverted">{% endif %}
+            <div class="timeline-badge {{ timeline.icon_color }}"><i class="{{ timeline.icon }}"></i></div>
+            <div class="timeline-panel">
+                <div class="timeline-heading">
+                    <h5 class="timeline-title text-info">{{ timeline.title }}</h5>
+                    <p class="mb-1">
+                        <span class="text-muted"><i class="glyphicon glyphicon-time"></i> {{ timeline.update_date|date:'Y-m-d'  }}</span>
+                        <span class="pull-right" id="star" title="{% get_star_title timeline.star_num %}">{% get_star timeline.star_num %}</span>
+                    </p>
+                </div>
+                <div class="timeline-body">
+                    {{ timeline.content_to_markdown|safe }}
+                </div>
+            </div>
+        </li>
+        {% empty %}
+        <p>暂时没有时间线</p>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+{% block sidebar_toc %}
+{% include 'blog/sidebar.html' %}
+{% endblock %}
+

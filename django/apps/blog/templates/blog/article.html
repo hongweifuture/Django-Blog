@@ -1,0 +1,124 @@
+{% extends 'blog/base.html' %}
+
+{% load blog_tags %}
+
+{% block content_detail %}
+
+<!--article header, include title create_date update_date and category-->
+<!--article_post from views ArticleView-->
+<header class="blog-post-page-title">
+    <h4>{{ article_post.title }}</h4>
+
+    <span>
+        <i class="fa fa-folder-o"></i>
+        {# <a href="{% url 'blog:category' article_post.category %}">{{ article_post.category }}</a> #}
+        <a href="{{ article_post.category.get_absolute_url }}">{{ article_post.category }}</a>
+    </span>
+
+    <span>
+        <time datetime="{{ article_post.create_date }}"><i class="fa fa-clock-o"></i> 创建于{{ article_post.create_date }}</time>
+        {% if article_post.update_date > article_post.create_date %}
+        <time datetime="{{ article_post.update_date }}"><i class="fa fa-clock-o"></i> 更新于{{ article_post.update_date }}</time>
+        {% endif %}
+    </span>
+
+    <span>
+        <i class="fa fa-eye">   {{ article_post.views }}</i>
+    </span>
+
+</header>
+
+<div class="blog-main-post blog-post-page-box">
+    <!--article detail, include body and tag-->
+    <article class="blog-post-block blog-post-page-content">
+        <section class="table">
+            {{ article_post.body|safe}}
+        </section>
+        <footer class="blog-post-page-tags">
+            {% for tag in article_post.tags.all %}
+            <a href="{{ tag.get_absolute_url }}" rel="tag" data-toggle="tooltip" data-placement="top" title="{{ tag }}">{{ tag }}</a>
+            {% endfor %}
+        </footer>
+        <hr>
+        <footer>
+            本文链接： {{ request.build_absolute_uri }}
+            <br>
+            版权声明： 本博客所有文章除特别声明外，均遵循<a href='https://creativecommons.org/licenses/by-sa/4.0/'> CC 4.0 BY-NC-SA </a> 版权协议。转载请附上原文链接！
+        </footer>
+    </article>
+    <!--previous and next page for article-->
+    <!--get_article_previous get_article_next get_article_num from blog_tags-->
+    <article class="blog-post-page-readmore">
+        {% get_article_previous article_post.id as article_previous %}
+        <!--￥￥解决第一篇文章（id=1）的问题，文章正常显示且不显示上一篇按钮，使用slug和get_absolute_url此问题自动修复-->
+        <!--￥￥{% if article_post.id > 1 %}-->
+        <!--  <a href="{% url 'blog:article' article_previous.slug %}" class="blog-post-page-readmore-prev" data-toggle="tooltip" data-placement="top" title="{{ article_previous.title }}">上一篇</a>-->
+            <a href="{{ article_previous.get_absolute_url }}" class="blog-post-page-readmore-prev" data-toggle="tooltip" data-placement="top" title="{{ article_previous.title }}"><< 上一篇</a>
+        <!-- ￥￥       {% endif %}-->
+
+        {% get_article_next article_post.id as article_next %}
+        <!--{% get_article_list as article_num %}   article_num|length可获取文章个数-->
+        <!--##解决最后一篇文章（id=max）的问题，文章正常显示且不显示下一篇按钮，使用slug和get_absolute_url此问题自动修复-->
+        <!--##{% get_article_maxid as article_maxid %}-->
+        <!--##{% if article_post.id < article_maxid %}-->
+            <a href="{{ article_next.get_absolute_url }}"  class="blog-post-page-readmore-next" data-toggle="tooltip" data-placement="top" title="{{ article_next.title }}">下一篇 >></a>
+        <!--##{% endif %}-->
+    </article>
+
+</div>
+{% endblock %}
+
+
+{% block sidebar_toc %}
+    {% if article_post.toc|length > 35 %}
+
+    <div class="col-xl-3 blog-sidebar">
+        <div class="blog-sidebar-title" >
+            <a href="">HongWei’s Blog</a>
+        </div>
+        <div class="blog-sidebar-toc sidebar"  id="sidebar">
+            <hr>
+            <h4 class="blog-sidebar-h4 sidebar__inner">
+                <i class="fa fa-heartbeat"></i>
+                <font size="5">目录</font>
+            </h4>
+            <!-- 由于 toc 的值为一段 HTML 文本，所以要使用 safe 标签过滤 -->
+            {{ article_post.toc|safe }}
+        </div>
+        <style>
+            .sidebar{
+                will-change: min-height;
+            }
+
+            .sidebar__inner{
+                transform: translate(0, 0);
+                transform: translate3d(0, 0, 0);
+                will-change: position, transform;
+            }
+        </style>
+
+        {% block script %}
+        <!-- 引入粘性侧边栏，与固定在"blog-sidebar-title"不同，这个是浮动的、动态的 -->
+        <script src="{% static 'js/jquery.sticky-sidebar.min.js' %}"></script>
+        <script type="text/javascript">
+            $('#sidebar').stickySidebar({
+                topSpacing: 20,
+                bottomSpacing: 20,
+            });
+        </script>
+
+        {% endblock script %}
+
+        <!--返回顶部按钮-->
+        <div class="retop">
+            <i class="fa fa-angle-up"></i>
+        </div>
+    </div>
+    {% else %}
+        {% include 'blog/sidebar.html' %}
+    {% endif %}
+
+{% endblock %}
+
+
+
