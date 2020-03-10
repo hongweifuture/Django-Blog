@@ -1,4 +1,4 @@
-Django==1.11.26
+Django==1.11.28
 mysqlclient==1.4.6
 Pillow==6.2.1
 django-uuslug==1.2.0
