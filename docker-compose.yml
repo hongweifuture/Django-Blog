@@ -3,7 +3,7 @@ version: "3"
 services:
 
   website:
-    image: hwnet/hw-website:1.11.26
+    image: hwnet/hw-website:2.2.8
     container_name: hw_django
     restart: always
     expose:
