@@ -73,19 +73,19 @@ docker-compose down
 # 备份
 ## 定时备份
 ```bash
-sh migrate -t "0 3 * * *"
+sh migrate.sh -t "0 3 * * *"
 ```
 ## 手动备份
 ```bash
-sh migrate -b
+sh migrate.sh -b
 ```
 ## 手动清理
 ```bash
-sh migrate -c
+sh migrate.sh -c
 ```
 # 恢复备份
 ```bash
-sh migrate -r *.sql.gz *.tar.gz
+sh migrate.sh -r *.sql.gz *.tar.gz
 ```
 
 # 访问
