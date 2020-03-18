@@ -3,14 +3,14 @@ version: "3"
 services:
 
   website:
-    build: .
+    image: hw-website:1.11.26
     container_name: hw_django
     restart: always
     expose:
-      - "8000"
+      - "7000"
     volumes:
       - ./django:/opt/hw-blog
-    command: bash -c "python manage.py collectstatic --noinput && python manage.py makemigrations && python manage.py migrate && python manage.py rebuild_index --noinput && gunicorn --timeout=30 --workers=4 --bind :8000 website.wsgi:application"
+    command: bash -c "python manage.py collectstatic --noinput && python manage.py makemigrations && python manage.py migrate && python manage.py rebuild_index --noinput && gunicorn --timeout=30 --workers=4 --bind :7000 website.wsgi:application"
     depends_on:
       - mysql
     networks:
@@ -20,8 +20,8 @@ services:
     image: mysql:5.7
     container_name: hw_mysql
     restart: always
-    ports:
-      - "3306:3306"
+    expose:
+      - "3306"
     volumes:
       - ./mysql:/var/lib/mysql
     command: mysqld --explicit_defaults_for_timestamp=true --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-connect='SET NAMES utf8mb4;'
@@ -36,7 +36,7 @@ services:
     container_name: hw_nginx
     restart: always
     ports:
-      - "8000:8000"
+      - "9000:8000"
     volumes:
       - ./django/static:/opt/hw-blog/static
       - ./django/media:/opt/hw-blog/media

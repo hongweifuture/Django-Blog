@@ -91,9 +91,9 @@ BLOG_SIDEBAR_NOTICE = ""
 PROJECT_ON = True
 PROJECT_TITLE = "项目归档"
 PROJECT_ARCHIVES = {'HwTTK-unittest': 'https://github.com/hongweifuture/JzUnit',
-                    '关于博客': '/about',
+                    'hexo-theme-halo': 'https://github.com/hongweifuture/hexo-theme-halo',
                     '建站日志': '/timeline',
-                    '百度': 'http://www.baidu.com',
+                    'HwTTK-HwTestReport': 'https://github.com/hongweifuture/HwTestReport',
                     }
 
 
