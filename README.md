@@ -71,6 +71,10 @@ docker-compose up -d
 docker-compose run website python manage.py createsuperuser
 ```
 
+## 停止
+```bash
+docker-compose down
+```
 
 # 备份
 ## 定时备份
