@@ -46,7 +46,7 @@ docker-compose up -d
 ...
 
   website:
-    image: hw-website:1.11.26
+    image: hwnet/hw-website:1.11.26
     container_name: hw_django
 ...
 
@@ -61,7 +61,7 @@ docker-compose up -d
 ...
 
   website:
-    image: hw-website:2.2.8
+    image: hwnet/hw-website:2.2.8
     container_name: hw_django
 ...
 
