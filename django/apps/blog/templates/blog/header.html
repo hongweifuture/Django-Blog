@@ -1,0 +1,33 @@
+<!--blog header, include navigation search-->
+<header class="blog-header">
+<!--    手机网页-->
+    <a href="/" class="blog-header-mobile-title">{{ BLOG_SIDEBAR_TITLE }}</a>
+    <a href="javascript:;" class="blog-header-navbar-btn"><i class="fa fa-bars"></i></a>
+    <nav class="blog-header-navbar blog-header-fixed">
+        <!--navigation-->
+        <ul class="blog-navbar-links">
+
+              <li class="blog-nav-item"><a href="/" class="transition">首页</a></li>
+
+              <li class="blog-nav-item"><a href="/archives/" class="transition">归档</a></li>
+
+<!--              <li class="blog-nav-item"><a href="/timeline/" class="transition">时间线</a></li>-->
+
+              <li class="blog-nav-item"><a href="/about/" class="transition">关于</a></li>
+
+            <!--search-->
+            <div class="blog-navbar-right">
+<!--                {# 下面form表单的method 是'get'不能改变，搜索栏的文本框的name="q" 也是固定不变的 #}-->
+<!--                {# action 表单的 提交地址，对搜索的处理 交由 搜索引擎 进行处理 #}-->
+                <form method="get" id="searchform" action="{% url 'blog:search' %}">
+                    <div class="input-group">
+                        <input type="search" class="blog-header-search" placeholder="search..." name="q">
+                        <button type="submit" class="blog-header-search-btn"><i class="fa fa-search"></i></button>
+                    </div>
+                </form>
+            </div>
+        </ul>
+    </nav>
+</header>
+
+

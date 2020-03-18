@@ -1,0 +1,73 @@
+{% extends 'blog/base.html' %}
+
+{% load blog_tags %}
+
+{% block content_detail %}
+
+<!--article archives, base on post year group-->
+<header class="blog-post-page-title"></header>
+
+{% if PROJECT_ON %}
+<div class="blog-main-post blog-post-page-box">
+      <article class="blog-post-block blog-post-page-content">
+        <section class="blog-links-page">
+            <h3>{{ PROJECT_TITLE }}</h3>
+            <div class="links-block "><br>
+                {% for project_title, project_url in PROJECT_ARCHIVES.items %}
+                <a href="{{ project_url }}" target="_blank" rel="noopener">{{ project_title }}</a><br>
+                {% endfor %}
+            </div>
+        </section>
+      </article>
+</div>
+{% endif %}
+
+<div class="blog-main-post blog-post-page-box">
+    {% regroup article_archives by create_date.year as year_list %}
+    {% for article_year in year_list %}
+    <article class="blog-post-block blog-post-page-content">
+        {% if PROJECT_ON %}
+            {% if forloop.first %}
+            <section>
+                <h3> 文章归档 </h3>
+            </section>
+            {% endif %}
+        {% endif %}
+        <h5 class="pl-3">{{ article_year.grouper }} 年</h5>
+            {% regroup article_year.list by create_date.month as month_list %}
+            {% for article_month in month_list %}
+            <h6 class="pl-5" >{{ article_month.grouper }} 月 (共 {{ article_month.list|length }} 篇)  </h6>
+                <div class="pl-4 collection">
+                    {% for article_day in article_month.list %}
+                    <li class="text-info" style="font-size:16px;">{{ article_day.create_date|date:'m-d' }} &nbsp;&nbsp;&nbsp;<a href="{{ article_day.get_absolute_url }}" target="_blank">{{ article_day.title }}</a></li>
+                    {% endfor %}
+                </div>
+
+            {% endfor %}
+    </article>
+    {% endfor %}
+</div>
+{% endblock %}
+
+
+{% block sidebar_toc %}
+    {% include 'blog/sidebar.html' %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
