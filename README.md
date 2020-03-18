@@ -109,7 +109,7 @@ IP:Port/administrator
 # 参考
 - 基于 Docker 的 Django 容器化部署之一：定制属于自己的 docker 镜像 [个人博客地址](https://www.zhwei.cn/django-docker-images) | [CSDN 博客地址](https://blog.csdn.net/z_johnny/article/details/104914845)
 - 基于 Docker 的 Django 容器化部署之二：docker-compose 部署 Django 项目  [个人博客地址](https://www.zhwei.cn/django-docker-compose-deploy) | [CSDN 博客地址](https://blog.csdn.net/z_johnny/article/details/104914953)
-- 基于 Docker 的 Django 容器化部署之三：定时备份，三步实现服务器迁移 [个人博客地址](https://www.zhwei.cn/django-docker-backup-restore) | [CSDN 博客地址](https://blog.csdn.net/z_johnny/article/details/104915016)
+- 基于 Docker 的 Django 容器化部署之三：定时备份，两步实现服务器迁移 [个人博客地址](https://www.zhwei.cn/django-docker-backup-restore) | [CSDN 博客地址](https://blog.csdn.net/z_johnny/article/details/104915016)
 
 
 # 问题
