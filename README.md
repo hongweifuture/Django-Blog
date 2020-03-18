@@ -1,8 +1,7 @@
-**只需拥有 `docker-compose.yml` 和 `nginx文件夹` 即可启动博客项目**
 
-这里把源码分享给大家：
-- diango-1.11.26  基于 Python3.7 和 Django 1.11.26 的博客源码
-- diango-2.2.8    基于 Python3.7 和 Django 2.2.8 的博客源码
+
+- `diango-1.11.26` 基于 Python 3.7 和 Django 1.11.26 的博客源码
+- `diango` 基于 Python 3.7 和 Django 2.2.8 的博客源码
 
 
   [点我进行 Django 博客预览](http://hongwei.design:8000/)
@@ -36,11 +35,17 @@
 ```bash
 git clone https://github.com/hongweifuture/Django-Blog
 ```
-## 运行 `django 1.11.26`
+
+## 运行 `django 2.2.8` （默认）
 ```bash
 docker-compose up -d
 ```
-只需更改 `website` 标签版本号
+
+## 运行 `django 1.11.26`
+
+更改 
+1. `docker-compose.yml` 中 `website` 的 `Docker Image` 标签版本号
+2. 将 `diango-1.11.26` 文件夹改名为 `diango`， 原 `diango` 文件夹更名
 ```bash
 
 ...
@@ -51,20 +56,9 @@ docker-compose up -d
 ...
 
 ```
-## 运行 `django 2.2.8`
+运行
 ```bash
 docker-compose up -d
-```
-只需更改 `website` 标签版本号
-```bash
-
-...
-
-  website:
-    image: hwnet/hw-website:2.2.8
-    container_name: hw_django
-...
-
 ```
 ## 创建后台管理员
 ```bash
