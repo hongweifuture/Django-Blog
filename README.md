@@ -4,11 +4,11 @@
 - `diango` 基于 Python 3.7 和 Django 2.2.8 的博客源码
 
 
-  [点我进行 Django 博客预览](http://hongwei.design:8000/)
+  [点我进行 Django 博客预览](https://blog.zhwei.cn/)
 
-  [管理后台](http://hongwei.design:8000/administrator) 体验账号： test / djangotest
+  [管理后台](https://blog.zhwei.cn/administrator) 体验账号： test / djangotest
 
-
+  
 # 说明
 
 `Django` 是使用 `Python` 编写的一个开源 `Web` 框架，采用 `MVC` 的软件设计模式，可以用它来快速搭建一个高性能的网站。
